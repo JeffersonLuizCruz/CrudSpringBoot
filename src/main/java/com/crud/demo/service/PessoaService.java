@@ -28,13 +28,8 @@ public class PessoaService implements IPessoaService{
 	}
 
 	@Override
-	public short salvar(Pessoa p) {
-		int res = 0;
-		Pessoa pessoa = dadoRepository.save(p);
-		if(!pessoa.equals(null)) {
-			res=1;
-		}
-		return (short) res;
+	public void salvar(Pessoa p) {
+		dadoRepository.save(p);
 	}
 
 	@Override

@@ -9,7 +9,7 @@ public interface IPessoaService{
 	
 	public List<Pessoa> listar();
 	public Optional<Pessoa> listarId(short id);
-	public short salvar(Pessoa p);
+	public void salvar(Pessoa p);
 	public void delete(short id);
 	
 
