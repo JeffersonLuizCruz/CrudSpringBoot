@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.crud.demo.interfaceService.IPessoaService;
+import com.crud.demo.interfaces.IPessoa;
 import com.crud.demo.model.Pessoa;
 
 @Controller
@@ -20,11 +20,11 @@ import com.crud.demo.model.Pessoa;
 public class Controlador {
 	
 	@Autowired
-	private IPessoaService service;
+	private IPessoa PessoaRepository;
 	
 	@GetMapping("/listar")
 	public String listar(Model model) {
-		List<Pessoa> pessoas = service.listar();
+		List<Pessoa> pessoas = PessoaRepository.findAll();
 		model.addAttribute("pessoas", pessoas);
 		return "index";
 	}
@@ -35,21 +35,21 @@ public class Controlador {
 	}
 	@PostMapping("/salvo")
 	public String salvar(@Validated Pessoa p) {
-		service.salvar(p);
+		PessoaRepository.save(p);
 		return "redirect:/listar";
 	}
 	
 	@GetMapping("/editar/{id}")
 	public String editar(@PathVariable short id, Model model) {
-		Optional<Pessoa> pessoa = service.listarId(id);
+		Optional<Pessoa> pessoa = PessoaRepository.findById(id);
 		model.addAttribute("pessoa", pessoa);
 		return "form";
 	}
 	
 	@GetMapping("/deletar/{id}")
 	public String deletar(@PathVariable short id, Model model) {
-		Optional<Pessoa> pessoa = service.listarId(id);
-		service.delete(id);
+		Optional<Pessoa> pessoa = PessoaRepository.findById(id);
+		PessoaRepository.deleteById(id);;
 		model.addAttribute("pessoa", pessoa);
 		return "redirect:/listar";
 	}
